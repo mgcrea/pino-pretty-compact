@@ -18,7 +18,7 @@ Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 ## Preview
 
 <p align="left">
-  <img src="https://raw.githubusercontent.com/mgcrea/pino-pretty-compact/master/docs/preview.png" width="600" alt="Preview" />
+  <img src="https://raw.githubusercontent.com/mgcrea/pino-pretty-compact/master/docs/preview.png" alt="Preview" />
 </p>
 
 ## Usage
