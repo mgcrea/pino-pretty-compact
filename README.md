@@ -15,6 +15,14 @@ Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 - Built with [TypeScript](https://www.typescriptlang.org/) for static type checking with exported types along the
   library.
 
+## Preview
+
+<p align="center">
+  <a href="https://github.com/mgcrea/pino-pretty-compact">
+    <img src="https://raw.githubusercontent.com/mgcrea/pino-pretty-compact/master/docs/preview.png" width="600" alt="Preview" />
+  </a>
+</p>
+
 ## Usage
 
 ```bash
