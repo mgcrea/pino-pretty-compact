@@ -27,4 +27,25 @@ describe('with fastify path', () => {
     });
     expect(response.statusCode).toEqual(200);
   });
+  it('should properly log a 400 error', async () => {
+    const response = await fastify.inject({
+      method: 'GET',
+      url: '/400',
+    });
+    expect(response.statusCode).toEqual(400);
+  });
+  it('should properly log a 500 error', async () => {
+    const response = await fastify.inject({
+      method: 'GET',
+      url: '/500',
+    });
+    expect(response.statusCode).toEqual(500);
+  });
+  it('should properly log a 404 error', async () => {
+    const response = await fastify.inject({
+      method: 'GET',
+      url: '/404',
+    });
+    expect(response.statusCode).toEqual(404);
+  });
 });

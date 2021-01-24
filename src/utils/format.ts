@@ -1,5 +1,9 @@
 import chalk, { Chalk } from 'chalk';
+import { SerializedError } from 'pino';
 import { LOG_LEVEL, LOG_LEVEL_LABEL } from '../config';
+
+const CWD = process.cwd();
+const CWD_REGEX = new RegExp(CWD, 'g');
 
 const chalkForLevel = (level: number): Chalk => {
   switch (level) {
@@ -24,3 +28,18 @@ export const formatTime = (time: number): string => chalk.gray(new Date(time).to
 export const formatLevel = (level: LOG_LEVEL): string => chalkForLevel(level)(LOG_LEVEL_LABEL[level]);
 export const formatId = (id: string | number): string => chalk.magenta(`#${id}`);
 export const formatModule = (module: string): string => chalk.gray(`(${module})`);
+export const formatErrorStack = (stack: string): string =>
+  chalk.gray(stack.replace(CWD_REGEX, '.').split('\n').slice(1).join('\n')) + '\n';
+export const formatError = (error: SerializedError): string => {
+  const { statusCode = 500, stack = '\n    at ???' } = error;
+
+  const isInternalError = !statusCode || statusCode >= 500;
+  const output = [chalk[isInternalError ? 'red' : 'yellow'](`×${error.type} `), chalk.magenta(statusCode)];
+
+  if (isInternalError) {
+    output.push(chalk.red(`: ${error.message}`), '\n', formatErrorStack(stack));
+  } else {
+    output.push(`: ${error.message}`);
+  }
+  return output.join('');
+};
