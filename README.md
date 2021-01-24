@@ -44,6 +44,12 @@ export const buildFastify = (options: FastifyServerOptions = {}): FastifyInstanc
 
 - [Olivier Louvignes](https://github.com/mgcrea) <<olivier@mgcrea.io>>
 
+### Credits
+
+Heavily inspired from
+
+- [pino-pretty](https://github.com/pinojs/pino-pretty) by [Matteo Collina](https://github.com/mcollina)
+
 ## License
 
 ```
