@@ -10,7 +10,7 @@ Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 
 - Relies on [chalk](https://github.com/chalk/chalk) for the coloring.
 
-- Usually used along [@mgcrea/pino-pretty-compact](https://github.com/mgcrea/pino-pretty-compact) to log requests.
+- Usually used along [@mgcrea/fastify-request-logger](https://github.com/mgcrea/fastify-request-logger) to log requests.
 
 - Built with [TypeScript](https://www.typescriptlang.org/) for static type checking with exported types along the
   library.
