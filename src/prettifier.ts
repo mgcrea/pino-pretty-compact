@@ -66,7 +66,7 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
     // Message or error
     const firstErrorKey = errorLikeObjectKeys.find((key) => object[key] && isSerializedError(object[key]));
     if (firstErrorKey) {
-      output.push(' ', formatError(object[firstErrorKey] as SerializedError));
+      output.push(' ', msg, EOL, formatError(object[firstErrorKey] as SerializedError));
     } else {
       output.push(' ', msg);
     }
