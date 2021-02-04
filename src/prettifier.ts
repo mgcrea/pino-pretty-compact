@@ -1,16 +1,16 @@
 import chalk from 'chalk';
-import type { PrettyOptions, SerializedError } from 'pino';
 import { EOL } from 'os';
+import type { PrettyOptions, SerializedError } from 'pino';
 import { ERROR_LIKE_KEYS, LOG_LEVEL, MESSAGE_KEY, TIMESTAMP_KEY } from './config';
 import {
   chalkJson,
   colorizeTime,
   formatError,
   formatHostname,
-  formatId,
   formatLevel,
-  formatModule,
   formatProcessId,
+  formatRequestId,
+  formatSessionId,
   formatTime,
   isSerializedError,
 } from './utils';
@@ -22,6 +22,7 @@ export type LogObject = {
   pid: number;
   hostname: string;
   reqId?: string | number;
+  sessionId?: string | number;
   module?: string;
   [s: string]: unknown;
 };
@@ -43,11 +44,11 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
   const { errorLikeObjectKeys = [], ignore = '' } = config;
   const ignoredKeys = ignore.split(',');
   // console.dir({ config });
+  const PAD_START = ''.padStart(formatTime(0).length);
   return (object: LogObject) => {
     // Generic
-    const { level, time, msg, pid, hostname, reqId, ...otherProps } = object;
+    const { level, time, msg, pid, hostname, reqId, sessionId, ...otherProps } = object;
     // process.stdout.write(JSON.stringify(object) + EOL);
-
     const formattedTime = formatTime(time);
     const output = [colorizeTime(formattedTime)];
     if (!ignoredKeys.includes('pid')) {
@@ -56,17 +57,22 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
     if (!ignoredKeys.includes('hostname')) {
       output.push(' ', formatHostname(hostname));
     }
+    output.push(' • ');
     if (!ignoredKeys.includes('level')) {
-      output.push(' • ', formatLevel(level), ':');
+      output.push(formatLevel(level), ':');
+    }
+    // Fastify session id
+    if (!ignoredKeys.includes('reqId') && reqId) {
+      output.push(' ', formatRequestId(reqId));
     }
     // Fastify request id
-    if (!ignoredKeys.includes('reqId') && reqId) {
-      output.push(' ', formatId(reqId));
+    if (!ignoredKeys.includes('sessionId') && sessionId) {
+      output.push(' ', formatSessionId(sessionId));
     }
     // Message or error
     const firstErrorKey = errorLikeObjectKeys.find((key) => object[key] && isSerializedError(object[key]));
     if (firstErrorKey) {
-      output.push(' ', msg, EOL, formatError(object[firstErrorKey] as SerializedError));
+      output.push(' ', msg, EOL, PAD_START, ' ', formatError(object[firstErrorKey] as SerializedError));
     } else {
       output.push(' ', msg);
     }
@@ -79,7 +85,7 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
       return soFar;
     }, {});
     if (Object.keys(outputProps).length > 0) {
-      output.push(EOL, ''.padStart(formattedTime.length), ' & ', chalkJson(outputProps));
+      output.push(EOL, PAD_START, ' & ', chalkJson(outputProps));
     }
     return output.concat(EOL).join('');
   };

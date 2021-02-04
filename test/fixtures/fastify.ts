@@ -36,6 +36,7 @@ export const buildFastify = (options: BuilfFastifyOptions = {}): FastifyInstance
   });
 
   fastify.post('/', (request, reply) => {
+    request.log.info({ sessionId: 'abcdef' }, 'Created a new session');
     reply.send({ hello: 'world', method: request.method });
   });
 
