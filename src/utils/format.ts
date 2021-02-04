@@ -30,7 +30,7 @@ export const colorizeTime = (time: string): string => chalk.gray(time);
 export const formatLevel = (level: LOG_LEVEL): string => chalkForLevel(level)(LOG_LEVEL_LABEL[level]);
 export const formatProcessId = (pid: number): string => chalk.magenta(`*${pid}`);
 export const formatHostname = (hostname: string | number): string => chalk.gray(`@${hostname}`);
-export const formatSessionId = (id: string | number): string => chalk.cyan(`%${id}`);
+export const formatSessionId = (id: string | number): string => chalk.magenta(`%${id}`);
 export const formatRequestId = (id: string | number): string => chalk.magenta(`#${id}`);
 export const formatModule = (module: string): string => chalk.gray(`(${module})`);
 export const formatErrorStack = (stack: string): string =>
