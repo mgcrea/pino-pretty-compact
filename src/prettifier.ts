@@ -57,7 +57,7 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
     if (!ignoredKeys.includes('hostname')) {
       output.push(' ', formatHostname(hostname));
     }
-    output.push(' • ');
+    output.push(' - ');
     if (!ignoredKeys.includes('level')) {
       output.push(formatLevel(level), ':');
     }
