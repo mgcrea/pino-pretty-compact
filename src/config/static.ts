@@ -1,3 +1,5 @@
+export const { OS_HOSTNAME } = process.env;
+
 export enum LOG_LEVEL {
   TRACE = 10,
   DEBUG = 20,

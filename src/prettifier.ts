@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { EOL } from 'os';
 import type { PrettyOptions, SerializedError } from 'pino';
-import { ERROR_LIKE_KEYS, LOG_LEVEL, MESSAGE_KEY, TIMESTAMP_KEY } from './config';
+import { ERROR_LIKE_KEYS, LOG_LEVEL, MESSAGE_KEY, TIMESTAMP_KEY, OS_HOSTNAME } from './config';
 import {
   chalkJson,
   colorizeTime,
@@ -55,7 +55,7 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
       output.push(' ', formatProcessId(pid));
     }
     if (!ignoredKeys.includes('hostname')) {
-      output.push(' ', formatHostname(hostname));
+      output.push(' ', formatHostname(OS_HOSTNAME || hostname));
     }
     output.push(' - ');
     if (!ignoredKeys.includes('level')) {
