@@ -32,7 +32,7 @@ export const formatProcessId = (pid: number): string => chalk.magenta(`*${pid}`)
 export const formatHostname = (hostname: string | number): string => chalk.gray(`@${hostname}`);
 export const formatSessionId = (id: string | number): string => chalk.magenta(`%${id}`);
 export const formatRequestId = (id: string | number): string => chalk.magenta(`#${id}`);
-export const formatModule = (module: string): string => chalk.gray(`(${module})`);
+export const formatPlugin = (plugin: string): string => chalk.gray(`(${plugin})`);
 export const formatErrorStack = (stack: string): string =>
   chalk.gray(stack.replace(CWD_REGEX, '.').split(EOL).slice(1).join(EOL));
 export const formatError = (error: SerializedError): string => {

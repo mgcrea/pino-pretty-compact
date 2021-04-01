@@ -39,6 +39,10 @@ export const buildFastify = (options: BuilfFastifyOptions = {}): FastifyInstance
     request.log.info({ sessionId: 'abcdef' }, 'Created a new session');
     reply.send({ hello: 'world', method: request.method });
   });
+  fastify.get('/silent', (request, reply) => {
+    request.log.info({ sessionId: 'abcdef', silent: true }, 'Created a new session');
+    reply.send({ hello: 'world', method: request.method });
+  });
 
   return fastify;
 };

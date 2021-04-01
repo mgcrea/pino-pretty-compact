@@ -48,4 +48,11 @@ describe('with fastify path', () => {
     });
     expect(response.statusCode).toEqual(404);
   });
+  it('should silence log', async () => {
+    const response = await fastify.inject({
+      method: 'GET',
+      url: '/silent',
+    });
+    expect(response.statusCode).toEqual(200);
+  });
 });

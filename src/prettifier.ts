@@ -8,6 +8,7 @@ import {
   formatError,
   formatHostname,
   formatLevel,
+  formatPlugin,
   formatProcessId,
   formatRequestId,
   formatSessionId,
@@ -23,7 +24,8 @@ export type LogObject = {
   hostname: string;
   reqId?: string | number;
   sessionId?: string | number;
-  module?: string;
+  plugin?: string;
+  silent?: boolean;
   [s: string]: unknown;
 };
 
@@ -45,10 +47,13 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
   const ignoredKeys = ignore.split(',');
   // console.dir({ config });
   const PAD_START = ''.padStart(formatTime(0).length);
-  return (object: LogObject) => {
+  return (object: LogObject): string => {
     // Generic
-    const { level, time, msg, pid, hostname, reqId, sessionId, ...otherProps } = object;
+    const { level, time, msg, pid, hostname, reqId, sessionId, plugin, silent, ...otherProps } = object;
     // process.stdout.write(JSON.stringify(object) + EOL);
+    if (silent) {
+      return '';
+    }
     const formattedTime = formatTime(time);
     const output = [colorizeTime(formattedTime)];
     if (!ignoredKeys.includes('pid')) {
@@ -75,6 +80,10 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
       output.push(' ', msg, EOL, PAD_START, ' ', formatError(object[firstErrorKey] as SerializedError));
     } else {
       output.push(' ', msg);
+    }
+    // Fastify plugin name
+    if (!ignoredKeys.includes('plugin') && plugin) {
+      output.push(' ', formatPlugin(plugin));
     }
     // Other props
     const outputProps = Object.keys(otherProps).reduce<Record<string, unknown>>((soFar, key) => {
