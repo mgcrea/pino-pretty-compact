@@ -5,7 +5,7 @@ import { LOG_LEVEL, LOG_LEVEL_LABEL } from '../config';
 const CWD = process.cwd();
 const CWD_REGEX = new RegExp(CWD, 'g');
 
-const chalkForLevel = (level: number): Chalk => {
+export const chalkForLevel = (level: number): Chalk => {
   switch (level) {
     case LOG_LEVEL.TRACE:
       return chalk.gray;
@@ -13,6 +13,24 @@ const chalkForLevel = (level: number): Chalk => {
       return chalk.cyan;
     case LOG_LEVEL.INFO:
       return chalk.green;
+    case LOG_LEVEL.WARN:
+      return chalk.yellow;
+    case LOG_LEVEL.ERROR:
+      return chalk.bold.red;
+    case LOG_LEVEL.FATAL:
+      return chalk.white.bgRed.bold;
+    default:
+      return chalk.white;
+  }
+};
+export const chalkMsgForLevel = (level: number): Chalk => {
+  switch (level) {
+    case LOG_LEVEL.TRACE:
+      return chalk.gray;
+    case LOG_LEVEL.DEBUG:
+      return chalk.white;
+    case LOG_LEVEL.INFO:
+      return chalk.white;
     case LOG_LEVEL.WARN:
       return chalk.yellow;
     case LOG_LEVEL.ERROR:
@@ -35,6 +53,7 @@ export const formatRequestId = (id: string | number): string => chalk.magenta(`#
 export const formatPlugin = (plugin: string): string => chalk.gray(`(${plugin})`);
 export const formatErrorStack = (stack: string): string =>
   chalk.gray(stack.replace(CWD_REGEX, '.').split(EOL).slice(1).join(EOL));
+
 export const formatError = (error: SerializedError): string => {
   const { statusCode = 500, type = error.name, stack = `${EOL}    at ???` } = error;
 

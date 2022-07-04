@@ -9,12 +9,14 @@
   "license": "MIT",
   "access": "public",
   "scripts": {
-    "build": "rm -rf lib/*; tsc --build",
-    "test": "jest",
-    "typecheck": "tsc --noEmit",
-    "prettycheck": "prettier --check 'src/' --check 'test/'",
+    "start": "npm run spec -- --watch",
+    "build": "rimraf lib/*; tsc --build",
     "lint": "eslint src/ test/",
-    "prepare": "npm run build"
+    "prettycheck": "prettier --check src/ test/",
+    "typecheck": "tsc --noEmit",
+    "spec": "DEBUG=fastify-session*,prisma-query jest --runInBand",
+    "test": "npm run lint && npm run prettycheck && npm run typecheck && npm run spec",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "pino",
@@ -24,28 +26,29 @@
     "logger"
   ],
   "devDependencies": {
-    "@mgcrea/fastify-request-logger": "^0.5.2",
-    "@tsconfig/node10": "^1.0.7",
-    "@types/http-errors": "^1.8.0",
-    "@types/ioredis": "^4.26.4",
-    "@types/jest": "^26.0.23",
-    "@types/node": "^15.6.1",
-    "@types/pino": "^6.3.8",
-    "@typescript-eslint/eslint-plugin": "^4.25.0",
-    "@typescript-eslint/parser": "^4.25.0",
-    "eslint": "^7.27.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-prettier": "^3.4.0",
-    "fastify": "^3.17.0",
-    "http-errors": "^1.8.0",
-    "jest": "^27.0.3",
-    "pino-pretty": "^5.0.1",
-    "prettier": "^2.3.0",
-    "ts-jest": "^27.0.2",
-    "typescript": "^4.3.2"
+    "@mgcrea/fastify-request-logger": "^0.6.1",
+    "@tsconfig/node14": "^1.0.3",
+    "@types/http-errors": "^1.8.2",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^16.11.42",
+    "@types/pino": "^7.0.4",
+    "@types/pino-pretty": "^4.7.5",
+    "@typescript-eslint/eslint-plugin": "^5.30.4",
+    "@typescript-eslint/parser": "^5.30.4",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "fastify": "^4.2.0",
+    "http-errors": "^2.0.0",
+    "jest": "^28.1.2",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4"
   },
   "dependencies": {
-    "chalk": "^4.1.1"
+    "chalk": "^4.1.1",
+    "pino-pretty": "^8.1.0"
   }
 }

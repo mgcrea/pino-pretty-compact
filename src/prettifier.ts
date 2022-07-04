@@ -1,10 +1,12 @@
 import chalk from 'chalk';
 import { EOL } from 'os';
-import type { PrettyOptions, SerializedError } from 'pino';
-import { ERROR_LIKE_KEYS, LOG_LEVEL, MESSAGE_KEY, TIMESTAMP_KEY, OS_HOSTNAME } from './config';
+import type { LogDescriptor, PrettyOptions, SerializedError } from 'pino';
+import prettifier from 'pino-pretty';
+import { LOG_LEVEL } from './config';
+import type PinoPretty from 'pino-pretty';
 import {
   chalkJson,
-  colorizeTime,
+  chalkMsgForLevel,
   formatError,
   formatHostname,
   formatLevel,
@@ -12,11 +14,10 @@ import {
   formatProcessId,
   formatRequestId,
   formatSessionId,
-  formatTime,
   isSerializedError,
 } from './utils';
 
-export type LogObject = {
+export interface LogObject extends LogDescriptor {
   level: LOG_LEVEL;
   time: number;
   msg: string;
@@ -27,59 +28,44 @@ export type LogObject = {
   plugin?: string;
   silent?: boolean;
   [s: string]: unknown;
-};
+}
 
-const defaultOptions: PrettyOptions = {
+const defaultOptions /* : PinoPretty.PrettyOptions */ = {
+  ignore: 'pid,hostname',
   colorize: Boolean(chalk.supportsColor),
-  crlf: EOL === '\r\n',
-  errorLikeObjectKeys: ERROR_LIKE_KEYS,
-  errorProps: '',
-  levelFirst: false,
-  messageKey: MESSAGE_KEY,
-  messageFormat: false,
-  timestampKey: TIMESTAMP_KEY,
-  translateTime: false,
+  errorLikeObjectKeys: ['error', 'err'],
+  singleLine: true,
+  hideObject: true,
+  translateTime: "yyyy-mm-dd'T'HH:MM:sso",
 };
 
-export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) => string) => {
-  const config = { ...defaultOptions, ...options };
-  const { errorLikeObjectKeys = [], ignore = '' } = config;
+const prettifyTime: PinoPretty.Prettifier = (inputData) => chalk.gray(inputData);
+
+export const build = (options: PrettyOptions) => {
+  const { errorLikeObjectKeys = defaultOptions.errorLikeObjectKeys, ignore = defaultOptions.ignore } = options;
   const ignoredKeys = ignore.split(',');
-  // console.dir({ config });
-  const PAD_START = ''.padStart(formatTime(0).length);
-  return (object: LogObject): string => {
-    // Generic
-    const { level, time, msg, pid, hostname, reqId, sessionId, plugin, silent, ...otherProps } = object;
-    // process.stdout.write(JSON.stringify(object) + EOL);
+
+  const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey, _leveLabel) => {
+    const { level, time, msg, reqId, sessionId, plugin, silent, ...otherProps } = log as LogObject;
     if (silent) {
       return '';
     }
-    const formattedTime = formatTime(time);
-    const output = [colorizeTime(formattedTime)];
-    if (!ignoredKeys.includes('pid')) {
-      output.push(' ', formatProcessId(pid));
-    }
-    if (!ignoredKeys.includes('hostname')) {
-      output.push(' ', formatHostname(OS_HOSTNAME || hostname));
-    }
-    output.push(' - ');
-    if (!ignoredKeys.includes('level')) {
-      output.push(formatLevel(level), ':');
+    const output = [];
+    // Fastify request id
+    if (!ignoredKeys.includes('reqId') && reqId) {
+      output.push(formatRequestId(reqId), ' ');
     }
     // Fastify session id
-    if (!ignoredKeys.includes('reqId') && reqId) {
-      output.push(' ', formatRequestId(reqId));
-    }
-    // Fastify request id
     if (!ignoredKeys.includes('sessionId') && sessionId) {
-      output.push(' ', formatSessionId(sessionId));
+      output.push(formatSessionId(sessionId), ' ');
     }
     // Message or error
-    const firstErrorKey = errorLikeObjectKeys.find((key) => object[key] && isSerializedError(object[key]));
+    const firstErrorKey = errorLikeObjectKeys.find((key) => log[key] && isSerializedError(log[key]));
+    const formattedMsg = chalkMsgForLevel(level)(log[messageKey]);
     if (firstErrorKey) {
-      output.push(' ', msg, EOL, PAD_START, ' ', formatError(object[firstErrorKey] as SerializedError));
+      output.push(formattedMsg, EOL, ' ', formatError(log[firstErrorKey] as SerializedError), EOL);
     } else {
-      output.push(' ', msg);
+      output.push(formattedMsg);
     }
     // Fastify plugin name
     if (!ignoredKeys.includes('plugin') && plugin) {
@@ -94,8 +80,20 @@ export const prettifier = (options: PrettyOptions = {}): ((object: LogObject) =>
       return soFar;
     }, {});
     if (Object.keys(outputProps).length > 0) {
-      output.push(EOL, PAD_START, ' & ', chalkJson(outputProps));
+      output.push(' ', chalkJson(outputProps));
     }
     return output.concat(EOL).join('');
   };
+
+  return prettifier({
+    ...defaultOptions,
+    customPrettifiers: {
+      time: prettifyTime,
+      level: formatLevel as unknown as PinoPretty.Prettifier,
+      hostname: formatHostname as unknown as PinoPretty.Prettifier,
+      pid: formatProcessId as unknown as PinoPretty.Prettifier,
+    },
+    messageFormat,
+    ...options,
+  });
 };

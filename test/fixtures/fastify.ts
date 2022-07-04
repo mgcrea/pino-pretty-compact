@@ -1,19 +1,14 @@
-import createFastify, { FastifyInstance, FastifyLoggerOptions, FastifyServerOptions } from 'fastify';
 import fastifyRequestLogger from '@mgcrea/fastify-request-logger';
-import prettifier from 'src/index';
+import createFastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import createError from 'http-errors';
-import 'src/typings';
 
 type BuilfFastifyOptions = FastifyServerOptions;
 
-const logger: FastifyLoggerOptions = {
+const logger: FastifyServerOptions['logger'] = {
   level: 'debug',
-  prettifier,
-  prettyPrint: {
-    colorize: true,
-    ignore: 'pid,hostname',
-    translateTime: 'yyyy-mm-dd HH:MM:ss.l',
-    levelFirst: true,
+  transport: {
+    target: './prettifier',
+    options: {},
   },
 };
 
@@ -27,11 +22,11 @@ export const buildFastify = (options: BuilfFastifyOptions = {}): FastifyInstance
     reply.send({ hello: 'world', method: request.method });
   });
 
-  fastify.get('/400', async (request, reply) => {
+  fastify.get('/400', async () => {
     throw createError(400);
   });
 
-  fastify.get('/500', async (request, reply) => {
+  fastify.get('/500', async () => {
     throw createError(500);
   });
 

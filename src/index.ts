@@ -1,5 +1,4 @@
-import './typings';
 export * from './utils/chalk';
 
-import { prettifier } from './prettifier';
-export default prettifier;
+import { build } from './prettifier';
+export default build;

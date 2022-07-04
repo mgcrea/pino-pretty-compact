@@ -17,17 +17,3 @@ export const LOG_LEVEL_LABEL: Record<LOG_LEVEL, string> = {
   [LOG_LEVEL.ERROR]: 'error',
   [LOG_LEVEL.FATAL]: 'fatal',
 };
-
-export const DATE_FORMAT = 'yyyy-mm-dd HH:MM:ss.l o';
-
-export const ERROR_LIKE_KEYS = ['err', 'error'];
-
-export const MESSAGE_KEY = 'msg';
-
-export const LEVEL_KEY = 'level';
-
-export const LEVEL_LABEL = 'levelLabel';
-
-export const TIMESTAMP_KEY = 'time';
-
-export const LOGGER_KEYS = ['pid', 'hostname', 'name', 'level', 'time', 'timestamp', 'caller'];
