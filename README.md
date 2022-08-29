@@ -34,7 +34,10 @@ import createFastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import prettifier from '@mgcrea/pino-pretty-compact';
 
 export const buildFastify = (options: FastifyServerOptions = {}): FastifyInstance => {
-  const fastify = createFastify({ logger: { prettyPrint: true, prettifier }, ...options });
+  const fastify = createFastify({
+    logger: { level: 'debug', transport: { target: '@mgcrea/pino-pretty-compact', options: {} } },
+    ...options,
+  });
 
   return fastify;
 };
@@ -52,7 +55,7 @@ Heavily inspired from
 
 ## License
 
-```
+```txt
 The MIT License
 
 Copyright (c) 2020 Olivier Louvignes <olivier@mgcrea.io>
