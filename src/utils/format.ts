@@ -1,11 +1,11 @@
-import chalk, { ChalkInstance } from 'chalk';
+import chalk from 'chalk';
 import type { SerializedError } from 'pino';
 import { LOG_LEVEL, LOG_LEVEL_LABEL } from '../config';
 
 const CWD = process.cwd();
 const CWD_REGEX = new RegExp(CWD, 'g');
 
-export const chalkForLevel = (level: number): ChalkInstance => {
+export const chalkForLevel = (level: number) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
       return chalk.gray;
@@ -23,7 +23,7 @@ export const chalkForLevel = (level: number): ChalkInstance => {
       return chalk.white;
   }
 };
-export const chalkMsgForLevel = (level: number): ChalkInstance => {
+export const chalkMsgForLevel = (level: number) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
       return chalk.gray;
