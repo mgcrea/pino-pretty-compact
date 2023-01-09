@@ -22,7 +22,7 @@
   "access": "public",
   "scripts": {
     "start": "npm run spec -- --watch",
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "rimraf dist/*; tsc --project tsconfig.build.json && tsup src/index.ts --format cjs",
     "lint": "eslint src/ test/",
     "prettycheck": "prettier --check src/ test/",
     "typecheck": "tsc --noEmit",
