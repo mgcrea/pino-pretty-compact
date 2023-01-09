@@ -1,8 +1,8 @@
-import chalk from 'chalk';
+import chalk, { supportsColor } from 'chalk';
 import { EOL } from 'os';
 import type { LogDescriptor, PrettyOptions, SerializedError } from 'pino';
 import prettifier from 'pino-pretty';
-import { LOG_LEVEL } from './config';
+import type { LOG_LEVEL } from './config';
 import type PinoPretty from 'pino-pretty';
 import {
   chalkJson,
@@ -32,7 +32,7 @@ export interface LogObject extends LogDescriptor {
 
 const defaultOptions /* : PinoPretty.PrettyOptions */ = {
   ignore: 'pid,hostname',
-  colorize: Boolean(chalk.supportsColor),
+  colorize: Boolean(supportsColor),
   errorLikeObjectKeys: ['error', 'err'],
   singleLine: true,
   hideObject: true,
