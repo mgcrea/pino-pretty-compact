@@ -3,8 +3,6 @@ lockfileVersion: 5.4
 specifiers:
   '@mgcrea/fastify-request-logger': ^0.6.1
   '@tsconfig/node-lts-strictest-esm': ^18.12.1
-  '@tsconfig/node14': ^1.0.3
-  '@tsconfig/node16-strictest-esm': ^1.0.3
   '@types/http-errors': ^2.0.1
   '@types/node': ^18.11.18
   '@typescript-eslint/eslint-plugin': ^5.48.1
@@ -31,8 +29,6 @@ dependencies:
 devDependencies:
   '@mgcrea/fastify-request-logger': 0.6.1
   '@tsconfig/node-lts-strictest-esm': 18.12.1
-  '@tsconfig/node14': 1.0.3
-  '@tsconfig/node16-strictest-esm': 1.0.3
   '@types/http-errors': 2.0.1
   '@types/node': 18.11.18
   '@typescript-eslint/eslint-plugin': 5.48.1_3jon24igvnqaqexgwtxk6nkpse
@@ -392,10 +388,6 @@ packages:
 
   /@tsconfig/node14/1.0.3:
     resolution: {integrity: sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==}
-    dev: true
-
-  /@tsconfig/node16-strictest-esm/1.0.3:
-    resolution: {integrity: sha512-0/QTPDkKmE2dy0dMRstPCv4VJ+gUGgvMKzaWd5P3hgdlmPqYqe1pJxDGUlNYbSgUBlncIvvX+mIeZarokysNgg==}
     dev: true
 
   /@tsconfig/node16/1.0.3:

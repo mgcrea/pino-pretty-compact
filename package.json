@@ -41,8 +41,6 @@
   "devDependencies": {
     "@mgcrea/fastify-request-logger": "^0.6.1",
     "@tsconfig/node-lts-strictest-esm": "^18.12.1",
-    "@tsconfig/node14": "^1.0.3",
-    "@tsconfig/node16-strictest-esm": "^1.0.3",
     "@types/http-errors": "^2.0.1",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
