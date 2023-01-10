@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@mgcrea/pino-pretty-compact.svg)](https://github.com/mgcrea/pino-pretty-compact/releases)
 [![license](https://img.shields.io/npm/l/@mgcrea/pino-pretty-compact)](https://tldrlegal.com/license/mit-license)
 [![build status](https://img.shields.io/github/actions/workflow/status/mgcrea/pino-pretty-compact/main.yml?branch=master)](https://github.com/mgcrea/pino-pretty-compact/actions)
-[![dependencies status](https://img.shields.io/depfu/dependencies/github/mgcrea/pino-pretty-compact)](https://depfu.com/github/mgcrea/pino-pretty-compact?project_id=37471)
+[![dependencies status](https://img.shields.io/depfu/dependencies/github/mgcrea/pino-pretty-compact)](https://depfu.com/github/mgcrea/pino-pretty-compact)
 
 Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 
@@ -23,13 +23,14 @@ Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 ## Usage
 
 ```bash
-npm install fastify-cookie @mgcrea/pino-pretty-compact --save
+npm install @mgcrea/pino-pretty-compact @mgcrea/fastify-request-logger --save
 # or
-yarn add fastify-cookie @mgcrea/pino-pretty-compact
+pnpm add @mgcrea/pino-pretty-compact @mgcrea/fastify-request-logger
 ```
 
 ```ts
 import createFastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
+import fastifyRequestLogger from '@mgcrea/fastify-request-logger';
 import prettifier from '@mgcrea/pino-pretty-compact';
 
 export const buildFastify = (options: FastifyServerOptions = {}): FastifyInstance => {
@@ -37,6 +38,8 @@ export const buildFastify = (options: FastifyServerOptions = {}): FastifyInstanc
     logger: { level: 'debug', transport: { target: '@mgcrea/pino-pretty-compact', options: {} } },
     ...options,
   });
+
+  fastify.register(fastifyRequestLogger);
 
   return fastify;
 };
