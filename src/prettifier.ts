@@ -1,6 +1,7 @@
 import chalk, { supportsColor } from 'chalk';
 import { EOL } from 'os';
-import type { LogDescriptor, SerializedError } from 'pino';
+import type { LogDescriptor } from 'pino';
+import type { SerializedError } from 'pino-std-serializers';
 import prettifier from 'pino-pretty';
 import type { LOG_LEVEL } from './config';
 import type PinoPretty from 'pino-pretty';

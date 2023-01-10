@@ -1,4 +1,4 @@
-import type { SerializedError } from 'pino';
+import type { SerializedError } from 'pino-std-serializers';
 
 export const isObject = (maybeObject: unknown): maybeObject is Record<string, unknown> =>
   typeof maybeObject === 'object' && maybeObject !== null;
