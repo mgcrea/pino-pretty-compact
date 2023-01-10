@@ -29,13 +29,22 @@ pnpm add @mgcrea/pino-pretty-compact @mgcrea/fastify-request-logger
 ```
 
 ```ts
-import createFastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
-import fastifyRequestLogger from '@mgcrea/fastify-request-logger';
-import prettifier from '@mgcrea/pino-pretty-compact';
+import createFastify, { FastifyInstance, FastifyServerOptions } from "fastify";
+import fastifyRequestLogger from "@mgcrea/fastify-request-logger";
+import prettifier from "@mgcrea/pino-pretty-compact";
 
 export const buildFastify = (options: FastifyServerOptions = {}): FastifyInstance => {
   const fastify = createFastify({
-    logger: { level: 'debug', transport: { target: '@mgcrea/pino-pretty-compact', options: {} } },
+    logger: {
+      level: "debug",
+      transport: {
+        target: "@mgcrea/pino-pretty-compact",
+        options: {
+          translateTime: "HH:MM:ss Z",
+          ignore: "pid,hostname",
+        },
+      },
+    },
     ...options,
   });
 
@@ -44,6 +53,10 @@ export const buildFastify = (options: FastifyServerOptions = {}): FastifyInstanc
   return fastify;
 };
 ```
+
+### Options
+
+You can use any [PinoPrettyOptions](https://github.com/pinojs/pino-pretty/blob/v9.1.1/index.d.ts#L38)
 
 ## Authors
 
