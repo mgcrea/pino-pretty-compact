@@ -7,7 +7,7 @@ type BuilfFastifyOptions = FastifyServerOptions;
 const logger: FastifyServerOptions["logger"] = {
   level: "debug",
   transport: {
-    target: "./prettifier",
+    target: `./prettifier.ts`,
     options: {},
   },
 };

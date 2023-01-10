@@ -1,9 +1,30 @@
 # PinoPrettyCompact
 
-[![npm version](https://img.shields.io/npm/v/@mgcrea/pino-pretty-compact.svg)](https://github.com/mgcrea/pino-pretty-compact/releases)
-[![license](https://img.shields.io/npm/l/@mgcrea/pino-pretty-compact)](https://tldrlegal.com/license/mit-license)
-[![build status](https://img.shields.io/github/actions/workflow/status/mgcrea/pino-pretty-compact/main.yml?branch=master)](https://github.com/mgcrea/pino-pretty-compact/actions)
-[![dependencies status](https://img.shields.io/depfu/dependencies/github/mgcrea/pino-pretty-compact)](https://depfu.com/github/mgcrea/pino-pretty-compact)
+<!-- markdownlint-disable MD033 -->
+<p align="center">
+  <a href="https://www.npmjs.com/package/@mgcrea/pino-pretty-compact">
+    <img src="https://img.shields.io/npm/v/@mgcrea/pino-pretty-compact.svg?style=for-the-badge" alt="npm version" />
+  </a>
+  <a href="https://www.npmjs.com/package/@mgcrea/pino-pretty-compact">
+    <img src="https://img.shields.io/npm/dt/@mgcrea/pino-pretty-compact.svg?style=for-the-badge" alt="npm total downloads" />
+  </a>
+  <a href="https://www.npmjs.com/package/@mgcrea/pino-pretty-compact">
+    <img src="https://img.shields.io/npm/dm/@mgcrea/pino-pretty-compact.svg?style=for-the-badge" alt="npm monthly downloads" />
+  </a>
+  <a href="https://www.npmjs.com/package/@mgcrea/pino-pretty-compact">
+    <img src="https://img.shields.io/npm/l/@mgcrea/pino-pretty-compact.svg?style=for-the-badge" alt="npm license" />
+  </a>
+  <br />
+  <a href="https://github.com/mgcrea/pino-pretty-compact/actions/workflows/main.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/mgcrea/pino-pretty-compact/main.yml?style=for-the-badge&branch=master" alt="build status" />
+  </a>
+  <a href="https://depfu.com/github/mgcrea/pino-pretty-compact">
+    <img src="https://img.shields.io/depfu/dependencies/github/mgcrea/pino-pretty-compact?style=for-the-badge" alt="dependencies status" />
+  </a>
+</p>
+<!-- markdownlint-enable MD037 -->
+
+## Features
 
 Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 

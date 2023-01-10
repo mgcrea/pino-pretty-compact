@@ -1,6 +1,8 @@
 import { buildFastify } from "test/fixtures";
+import { afterAll, describe, expect, it } from "vitest";
 
 describe("with fastify path", () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const context = new Map<string, any>([
     ["payload", { foo: "bar" }],
     ["token", "abc"],
