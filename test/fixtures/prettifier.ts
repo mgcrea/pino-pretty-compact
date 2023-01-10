@@ -1,3 +1,3 @@
-import pretty from './../../src/index';
+import pretty from "./../../src/index";
 
 export default pretty;

@@ -1,4 +1,4 @@
-export * from './utils/chalk';
+export * from "./utils/chalk";
 
-import { build } from './prettifier';
+import { build } from "./prettifier";
 export default build;

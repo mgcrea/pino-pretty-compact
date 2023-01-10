@@ -1,9 +1,9 @@
-import chalk from 'chalk';
-import type { SerializedError } from 'pino';
-import { LOG_LEVEL, LOG_LEVEL_LABEL } from '../config';
+import chalk from "chalk";
+import type { SerializedError } from "pino";
+import { LOG_LEVEL, LOG_LEVEL_LABEL } from "../config";
 
 const CWD = process.cwd();
-const CWD_REGEX = new RegExp(CWD, 'g');
+const CWD_REGEX = new RegExp(CWD, "g");
 
 export const chalkForLevel = (level: number) => {
   switch (level) {
@@ -42,7 +42,7 @@ export const chalkMsgForLevel = (level: number) => {
   }
 };
 
-import { EOL } from 'os';
+import { EOL } from "os";
 export const formatTime = (time: number): string => new Date(time).toISOString();
 export const colorizeTime = (time: string): string => chalk.gray(time);
 export const formatLevel = (level: LOG_LEVEL): string => chalkForLevel(level)(LOG_LEVEL_LABEL[level]);
@@ -52,18 +52,18 @@ export const formatSessionId = (id: string | number): string => chalk.magenta(`%
 export const formatRequestId = (id: string | number): string => chalk.magenta(`#${id}`);
 export const formatPlugin = (plugin: string): string => chalk.gray(`(${plugin})`);
 export const formatErrorStack = (stack: string): string =>
-  chalk.gray(stack.replace(CWD_REGEX, '.').split(EOL).slice(1).join(EOL));
+  chalk.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
 
 export const formatError = (error: SerializedError): string => {
-  const { statusCode = 500, type = error['name'], stack = `${EOL}    at ???` } = error;
+  const { statusCode = 500, type = error["name"], stack = `${EOL}    at ???` } = error;
 
   const isInternalError = !statusCode || statusCode >= 500;
-  const output = [chalk[isInternalError ? 'red' : 'yellow'](`×${type} `), chalk.magenta(statusCode)];
+  const output = [chalk[isInternalError ? "red" : "yellow"](`×${type} `), chalk.magenta(statusCode)];
 
   if (isInternalError) {
     output.push(chalk.red(`: ${error.message}`), EOL, formatErrorStack(stack));
   } else {
     output.push(`: ${error.message}`);
   }
-  return output.join('');
+  return output.join("");
 };

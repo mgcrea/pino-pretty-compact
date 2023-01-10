@@ -1,13 +1,13 @@
-import fastifyRequestLogger from '@mgcrea/fastify-request-logger';
-import createFastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
-import createError from 'http-errors';
+import fastifyRequestLogger from "@mgcrea/fastify-request-logger";
+import createFastify, { FastifyInstance, FastifyServerOptions } from "fastify";
+import createError from "http-errors";
 
 type BuilfFastifyOptions = FastifyServerOptions;
 
-const logger: FastifyServerOptions['logger'] = {
-  level: 'debug',
+const logger: FastifyServerOptions["logger"] = {
+  level: "debug",
   transport: {
-    target: './prettifier',
+    target: "./prettifier",
     options: {},
   },
 };
@@ -18,25 +18,25 @@ export const buildFastify = (options: BuilfFastifyOptions = {}): FastifyInstance
 
   fastify.register(fastifyRequestLogger);
 
-  fastify.get('/', (request, reply) => {
-    reply.send({ hello: 'world', method: request.method });
+  fastify.get("/", (request, reply) => {
+    reply.send({ hello: "world", method: request.method });
   });
 
-  fastify.get('/400', async () => {
+  fastify.get("/400", async () => {
     throw createError(400);
   });
 
-  fastify.get('/500', async () => {
+  fastify.get("/500", async () => {
     throw createError(500);
   });
 
-  fastify.post('/', (request, reply) => {
-    request.log.info({ sessionId: 'abcdef' }, 'Created a new session');
-    reply.send({ hello: 'world', method: request.method });
+  fastify.post("/", (request, reply) => {
+    request.log.info({ sessionId: "abcdef" }, "Created a new session");
+    reply.send({ hello: "world", method: request.method });
   });
-  fastify.get('/silent', (request, reply) => {
-    request.log.info({ sessionId: 'abcdef', silent: true }, 'Created a new session');
-    reply.send({ hello: 'world', method: request.method });
+  fastify.get("/silent", (request, reply) => {
+    request.log.info({ sessionId: "abcdef", silent: true }, "Created a new session");
+    reply.send({ hello: "world", method: request.method });
   });
 
   return fastify;

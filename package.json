@@ -2,6 +2,10 @@
   "name": "@mgcrea/pino-pretty-compact",
   "version": "0.7.1",
   "description": "Compact request logger plugin for fastify written in TypeScript",
+  "author": "Olivier Louvignes <olivier@mgcrea.io>",
+  "repository": "github:mgcrea/pino-pretty-compact",
+  "license": "MIT",
+  "access": "public",
   "type": "module",
   "exports": {
     ".": {
@@ -16,15 +20,12 @@
   "files": [
     "dist"
   ],
-  "author": "Olivier Louvignes <olivier@mgcrea.io>",
-  "repository": "github:mgcrea/pino-pretty-compact",
-  "license": "MIT",
-  "access": "public",
   "scripts": {
     "start": "npm run spec -- --watch",
     "build": "rimraf dist/*; tsc --project tsconfig.build.json && tsup src/index.ts --format cjs",
     "lint": "eslint src/ test/",
     "prettycheck": "prettier --check src/ test/",
+    "prettyfix": "prettier --write src/ test/",
     "typecheck": "tsc --noEmit",
     "spec": "DEBUG=fastify-session*,prisma-query jest --runInBand",
     "test": "npm run lint && npm run prettycheck && npm run typecheck && npm run spec",
