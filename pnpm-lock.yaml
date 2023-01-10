@@ -22,7 +22,6 @@ specifiers:
   pino-pretty: ^9.1.1
   pino-std-serializers: ^6.1.0
   prettier: ^2.8.2
-  rimraf: ^3.0.2
   ts-jest: ^29.0.3
   ts-node: ^10.9.1
   tsup: ^6.5.0
@@ -53,7 +52,6 @@ devDependencies:
   pino: 8.8.0
   pino-std-serializers: 6.1.0
   prettier: 2.8.2
-  rimraf: 3.0.2
   ts-jest: 29.0.3_p6ekqnroyms5nhqbfxosryz7rm
   ts-node: 10.9.1_awa2wsr5thmg3i7jqycphctjfq
   tsup: 6.5.0_z6wznmtyb6ovnulj6iujpct7um
