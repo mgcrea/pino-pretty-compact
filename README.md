@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@mgcrea/pino-pretty-compact.svg)](https://github.com/mgcrea/pino-pretty-compact/releases)
 [![license](https://img.shields.io/npm/l/@mgcrea/pino-pretty-compact)](https://tldrlegal.com/license/mit-license)
 [![build status](https://img.shields.io/github/workflow/status/mgcrea/pino-pretty-compact/ci)](https://github.com/mgcrea/pino-pretty-compact/actions)
-![dependencies status](https://img.shields.io/librariesio/github/mgcrea/pino-pretty-compact)
+[![dependencies status](https://img.shields.io/librariesio/github/mgcrea/pino-pretty-compact)](https://libraries.io/github/mgcrea/pino-pretty-compact)
 
 Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 
