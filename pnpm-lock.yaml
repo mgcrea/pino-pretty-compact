@@ -8,7 +8,6 @@ specifiers:
   '@types/http-errors': ^2.0.1
   '@types/jest': ^29.2.5
   '@types/node': ^18.11.18
-  '@types/pino-pretty': ^4.7.5
   '@typescript-eslint/eslint-plugin': ^5.48.1
   '@typescript-eslint/parser': ^5.48.1
   chalk: ^4
@@ -19,6 +18,7 @@ specifiers:
   fastify: ^4.11.0
   http-errors: ^2.0.0
   jest: ^29.3.1
+  pino: ^8.8.0
   pino-pretty: ^9.1.1
   prettier: ^2.8.2
   ts-jest: ^29.0.3
@@ -39,7 +39,6 @@ devDependencies:
   '@types/http-errors': 2.0.1
   '@types/jest': 29.2.5
   '@types/node': 18.11.18
-  '@types/pino-pretty': 4.7.5
   '@typescript-eslint/eslint-plugin': 5.48.1_3jon24igvnqaqexgwtxk6nkpse
   '@typescript-eslint/parser': 5.48.1_iukboom6ndih5an6iafl45j2fe
   eslint: 8.31.0
@@ -49,6 +48,7 @@ devDependencies:
   fastify: 4.11.0
   http-errors: 2.0.0
   jest: 29.3.1_zfha7dvnw4nti6zkbsmhmn6xo4
+  pino: 8.8.0
   prettier: 2.8.2
   ts-jest: 29.0.3_p6ekqnroyms5nhqbfxosryz7rm
   ts-node: 10.9.1_awa2wsr5thmg3i7jqycphctjfq
@@ -992,29 +992,6 @@ packages:
 
   /@types/node/18.11.18:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
-    dev: true
-
-  /@types/pino-pretty/4.7.5:
-    resolution: {integrity: sha512-rfHe6VIknk14DymxGqc9maGsRe8/HQSvM2u46EAz2XrS92qsAJnW16dpdFejBuZKD8cRJX6Aw6uVZqIQctMpAg==}
-    dependencies:
-      '@types/node': 18.11.18
-      '@types/pino': 6.3.12
-    dev: true
-
-  /@types/pino-std-serializers/4.0.0:
-    resolution: {integrity: sha512-gXfUZx2xIBbFYozGms53fT0nvkacx/+62c8iTxrEqH5PkIGAQvDbXg2774VWOycMPbqn5YJBQ3BMsg4Li3dWbg==}
-    deprecated: This is a stub types definition. pino-std-serializers provides its own type definitions, so you do not need this installed.
-    dependencies:
-      pino-std-serializers: 6.1.0
-    dev: true
-
-  /@types/pino/6.3.12:
-    resolution: {integrity: sha512-dsLRTq8/4UtVSpJgl9aeqHvbh6pzdmjYD3C092SYgLD2TyoCqHpTJk6vp8DvCTGGc7iowZ2MoiYiVUUCcu7muw==}
-    dependencies:
-      '@types/node': 18.11.18
-      '@types/pino-pretty': 4.7.5
-      '@types/pino-std-serializers': 4.0.0
-      sonic-boom: 2.8.0
     dev: true
 
   /@types/prettier/2.7.2:
@@ -3850,12 +3827,6 @@ packages:
   /slash/4.0.0:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
-    dev: true
-
-  /sonic-boom/2.8.0:
-    resolution: {integrity: sha512-kuonw1YOYYNOve5iHdSahXPOK49GqwA+LZhI6Wz/l0rP57iKyXXIHaRagOBHAPmGwJC6od2Z9zgvZ5loSgMlVg==}
-    dependencies:
-      atomic-sleep: 1.0.0
     dev: true
 
   /sonic-boom/3.2.1:

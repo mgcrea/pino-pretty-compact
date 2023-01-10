@@ -1,6 +1,6 @@
 import chalk, { supportsColor } from 'chalk';
 import { EOL } from 'os';
-import type { LogDescriptor, PrettyOptions, SerializedError } from 'pino';
+import type { LogDescriptor, SerializedError } from 'pino';
 import prettifier from 'pino-pretty';
 import type { LOG_LEVEL } from './config';
 import type PinoPretty from 'pino-pretty';
@@ -41,7 +41,7 @@ const defaultOptions /* : PinoPretty.PrettyOptions */ = {
 
 const prettifyTime: PinoPretty.Prettifier = (inputData) => chalk.gray(inputData);
 
-export const build = (options: PrettyOptions) => {
+export const build = (options: PinoPretty.PrettyOptions) => {
   const { errorLikeObjectKeys = defaultOptions.errorLikeObjectKeys, ignore = defaultOptions.ignore } = options;
   const ignoredKeys = ignore.split(',');
 
