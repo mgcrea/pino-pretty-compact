@@ -56,9 +56,11 @@ export const formatErrorStack = (stack: string): string =>
 
 export const formatError = (error: SerializedError): string => {
   const { statusCode = 500, type = error["name"], stack = `${EOL}    at ???` } = error;
+  const supportsArt = color.options.supportLevel === 2; /* SupportLevel.ansi256 */
+  const icon = supportsArt ? "×" : "x";
 
   const isInternalError = !statusCode || statusCode >= 500;
-  const output = [color[isInternalError ? "red" : "yellow"](`×${type} `), color.magenta(statusCode)];
+  const output = [color[isInternalError ? "red" : "yellow"](`${icon}${type} `), color.magenta(statusCode)];
 
   if (isInternalError) {
     output.push(color.red(`: ${error.message}`), EOL, formatErrorStack(stack));
