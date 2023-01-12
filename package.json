@@ -27,7 +27,7 @@
     "prettycheck": "prettier --check src/ test/",
     "prettify": "prettier --write src/ test/",
     "typecheck": "tsc --noEmit",
-    "spec": "vitest --run",
+    "spec": "rm -rf node_modules/.vitest; vitest --run --no-threads --no-isolate",
     "test": "npm run lint && npm run prettycheck && npm run typecheck && npm run spec",
     "prepublishOnly": "npm run build"
   },
@@ -39,7 +39,7 @@
     "logger"
   ],
   "devDependencies": {
-    "@mgcrea/fastify-request-logger": "^0.6.1",
+    "@mgcrea/fastify-request-logger": "^1.0.0",
     "@tsconfig/node-lts-strictest-esm": "^18.12.1",
     "@types/http-errors": "^2.0.1",
     "@types/node": "^18.11.18",
@@ -57,10 +57,10 @@
     "ts-node": "^10.9.1",
     "tsup": "^6.5.0",
     "typescript": "^4.9.4",
-    "vitest": "^0.27.0"
+    "vitest": "^0.27.1"
   },
   "dependencies": {
-    "chalk": "^4",
+    "kolorist": "^1.6.0",
     "pino-pretty": "^9.1.1"
   }
 }

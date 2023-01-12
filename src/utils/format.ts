@@ -1,67 +1,67 @@
-import chalk from "chalk";
+import * as color from "kolorist";
 import type { SerializedError } from "pino";
 import { LOG_LEVEL, LOG_LEVEL_LABEL } from "../config";
 
 const CWD = process.cwd();
 const CWD_REGEX = new RegExp(CWD, "g");
 
-export const chalkForLevel = (level: number) => {
+export const colorForLevel = (level: number) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
-      return chalk.gray;
+      return color.gray;
     case LOG_LEVEL.DEBUG:
-      return chalk.cyan;
+      return color.cyan;
     case LOG_LEVEL.INFO:
-      return chalk.green;
+      return color.green;
     case LOG_LEVEL.WARN:
-      return chalk.yellow;
+      return color.yellow;
     case LOG_LEVEL.ERROR:
-      return chalk.bold.red;
+      return (...args: Parameters<typeof color.bold>) => color.bold(color.red(...args));
     case LOG_LEVEL.FATAL:
-      return chalk.white.bgRed.bold;
+      return (...args: Parameters<typeof color.bold>) => color.bold(color.bgRed(...args));
     default:
-      return chalk.white;
+      return color.white;
   }
 };
-export const chalkMsgForLevel = (level: number) => {
+export const colorMsgForLevel = (level: number) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
-      return chalk.gray;
+      return color.gray;
     case LOG_LEVEL.DEBUG:
-      return chalk.white;
+      return color.white;
     case LOG_LEVEL.INFO:
-      return chalk.white;
+      return color.white;
     case LOG_LEVEL.WARN:
-      return chalk.yellow;
+      return color.yellow;
     case LOG_LEVEL.ERROR:
-      return chalk.bold.red;
+      return (...args: Parameters<typeof color.bold>) => color.bold(color.red(...args));
     case LOG_LEVEL.FATAL:
-      return chalk.white.bgRed.bold;
+      return (...args: Parameters<typeof color.bold>) => color.bold(color.bgRed(...args));
     default:
-      return chalk.white;
+      return color.white;
   }
 };
 
 import { EOL } from "os";
 export const formatTime = (time: number): string => new Date(time).toISOString();
-export const colorizeTime = (time: string): string => chalk.gray(time);
-export const formatLevel = (level: LOG_LEVEL): string => chalkForLevel(level)(LOG_LEVEL_LABEL[level]);
-export const formatProcessId = (pid: number): string => chalk.magenta(`*${pid}`);
-export const formatHostname = (hostname: string | number): string => chalk.gray(`@${hostname}`);
-export const formatSessionId = (id: string | number): string => chalk.magenta(`%${id}`);
-export const formatRequestId = (id: string | number): string => chalk.magenta(`#${id}`);
-export const formatPlugin = (plugin: string): string => chalk.gray(`(${plugin})`);
+export const colorizeTime = (time: string): string => color.gray(time);
+export const formatLevel = (level: LOG_LEVEL): string => colorForLevel(level)(LOG_LEVEL_LABEL[level]);
+export const formatProcessId = (pid: number): string => color.magenta(`*${pid}`);
+export const formatHostname = (hostname: string | number): string => color.gray(`@${hostname}`);
+export const formatSessionId = (id: string | number): string => color.magenta(`%${id}`);
+export const formatRequestId = (id: string | number): string => color.magenta(`#${id}`);
+export const formatPlugin = (plugin: string): string => color.gray(`(${plugin})`);
 export const formatErrorStack = (stack: string): string =>
-  chalk.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
+  color.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
 
 export const formatError = (error: SerializedError): string => {
   const { statusCode = 500, type = error["name"], stack = `${EOL}    at ???` } = error;
 
   const isInternalError = !statusCode || statusCode >= 500;
-  const output = [chalk[isInternalError ? "red" : "yellow"](`×${type} `), chalk.magenta(statusCode)];
+  const output = [color[isInternalError ? "red" : "yellow"](`×${type} `), color.magenta(statusCode)];
 
   if (isInternalError) {
-    output.push(chalk.red(`: ${error.message}`), EOL, formatErrorStack(stack));
+    output.push(color.red(`: ${error.message}`), EOL, formatErrorStack(stack));
   } else {
     output.push(`: ${error.message}`);
   }

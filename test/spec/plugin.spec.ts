@@ -1,5 +1,8 @@
+import { fsyncSync } from "node:fs";
 import { buildFastify } from "test/fixtures";
 import { afterAll, describe, expect, it } from "vitest";
+
+const fastify = buildFastify();
 
 describe("with fastify path", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -7,9 +10,9 @@ describe("with fastify path", () => {
     ["payload", { foo: "bar" }],
     ["token", "abc"],
   ]);
-  const fastify = buildFastify({});
   afterAll(() => {
     fastify.close();
+    fsyncSync(1);
   });
   it("should properly log a GET request", async () => {
     const response = await fastify.inject({

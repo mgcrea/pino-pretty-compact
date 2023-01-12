@@ -1,14 +1,18 @@
 import fastifyRequestLogger from "@mgcrea/fastify-request-logger";
 import createFastify, { FastifyInstance, FastifyServerOptions } from "fastify";
 import createError from "http-errors";
+import { fsyncSync } from "node:fs";
 
 type BuilfFastifyOptions = FastifyServerOptions;
 
 const logger: FastifyServerOptions["logger"] = {
   level: "debug",
   transport: {
-    target: `./prettifier.ts`,
-    options: {},
+    target: require.resolve("./target.mjs"),
+    options: {
+      // colorize: true,
+      // sync: true,
+    },
   },
 };
 
@@ -41,3 +45,12 @@ export const buildFastify = (options: BuilfFastifyOptions = {}): FastifyInstance
 
   return fastify;
 };
+
+process.on("uncaughtException", (err) => {
+  console.error("uncaughtException", err);
+  fsyncSync(1);
+});
+process.on("unhandledRejection", (reason, _promise) => {
+  console.error("unhandledRejection", reason);
+  fsyncSync(1);
+});

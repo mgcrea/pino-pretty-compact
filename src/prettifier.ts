@@ -1,4 +1,4 @@
-import chalk, { supportsColor } from "chalk";
+import * as color from "kolorist";
 import { EOL } from "os";
 import type { LogDescriptor } from "pino";
 import type PinoPretty from "pino-pretty";
@@ -6,8 +6,8 @@ import prettifier from "pino-pretty";
 import type { SerializedError } from "pino-std-serializers";
 import type { LOG_LEVEL } from "./config";
 import {
-  chalkJson,
-  chalkMsgForLevel,
+  colorJson,
+  colorMsgForLevel,
   formatError,
   formatHostname,
   formatLevel,
@@ -31,16 +31,16 @@ export interface LogObject extends LogDescriptor {
   [s: string]: unknown;
 }
 
-const defaultOptions = {
+const defaultOptions /*: PinoPretty.PrettyOptions*/ = {
   ignore: "pid,hostname",
-  colorize: Boolean(supportsColor),
+  colorize: Boolean(color.options.supportLevel),
   errorLikeObjectKeys: ["error", "err"],
   singleLine: true,
   hideObject: true,
   translateTime: "yyyy-mm-dd'T'HH:MM:sso",
 };
 
-const prettifyTime: PinoPretty.Prettifier = (inputData) => chalk.gray(inputData);
+const prettifyTime: PinoPretty.Prettifier = (inputData) => color.gray(String(inputData));
 
 export const build = (options: PinoPretty.PrettyOptions) => {
   const { errorLikeObjectKeys = defaultOptions.errorLikeObjectKeys, ignore = defaultOptions.ignore } =
@@ -63,7 +63,7 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     }
     // Message or error
     const firstErrorKey = errorLikeObjectKeys.find((key) => log[key] && isSerializedError(log[key]));
-    const formattedMsg = chalkMsgForLevel(level)(log[messageKey]);
+    const formattedMsg = colorMsgForLevel(level)(String(log[messageKey]));
     if (firstErrorKey) {
       output.push(formattedMsg, EOL, " ", formatError(log[firstErrorKey] as SerializedError), EOL);
     } else {
@@ -82,7 +82,7 @@ export const build = (options: PinoPretty.PrettyOptions) => {
       return soFar;
     }, {});
     if (Object.keys(outputProps).length > 0) {
-      output.push(" ", chalkJson(outputProps));
+      output.push(" ", colorJson(outputProps));
     }
     return output.concat(EOL).join("");
   };
