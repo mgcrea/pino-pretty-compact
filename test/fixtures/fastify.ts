@@ -10,8 +10,8 @@ const logger: FastifyServerOptions["logger"] = {
   transport: {
     target: require.resolve("./target.mjs"),
     options: {
-      // colorize: true,
-      // sync: true,
+      colorize: true,
+      sync: true,
     },
   },
 };

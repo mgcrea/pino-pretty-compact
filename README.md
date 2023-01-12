@@ -28,7 +28,7 @@
 
 Compact pino-based prettifier for [fastify](https://github.com/fastify/fastify).
 
-- Relies on [chalk](https://github.com/chalk/chalk) for the coloring.
+- Relies on [kolorist](https://github.com/marvinhagemeister/kolorist) for the coloring.
 
 - Usually used along [@mgcrea/fastify-request-logger](https://github.com/mgcrea/fastify-request-logger) to log requests.
 

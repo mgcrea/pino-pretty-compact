@@ -1,8 +1,11 @@
 import { fsyncSync } from "node:fs";
 import { buildFastify } from "test/fixtures";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-const fastify = buildFastify();
+let fastify: ReturnType<typeof buildFastify>;
+beforeAll(() => {
+  fastify = buildFastify();
+});
 
 describe("with fastify path", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
