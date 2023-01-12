@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@mgcrea/fastify-request-logger': ^1.0.0
+  '@mgcrea/fastify-request-logger': ^1.1.0
   '@tsconfig/node-lts-strictest-esm': ^18.12.1
   '@types/http-errors': ^2.0.1
   '@types/node': ^18.11.18
@@ -28,7 +28,7 @@ dependencies:
   pino-pretty: 9.1.1
 
 devDependencies:
-  '@mgcrea/fastify-request-logger': 1.0.0
+  '@mgcrea/fastify-request-logger': 1.1.0
   '@tsconfig/node-lts-strictest-esm': 18.12.1
   '@types/http-errors': 2.0.1
   '@types/node': 18.11.18
@@ -348,11 +348,11 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@mgcrea/fastify-request-logger/1.0.0:
-    resolution: {integrity: sha512-OSN8p3l03CkR50jzKoNdEahiwdHlnTocrUpNW00TW3NHbiFy5jv35L1+9wTJt/JIlpb1T2b4XajaAdfQHrpZBQ==}
+  /@mgcrea/fastify-request-logger/1.1.0:
+    resolution: {integrity: sha512-1s9RP+H9OEyCIlO2hfdmEuwoQMDVc/QLgsHZAPIbWtGbARJo1b/S0Z8KJYbciiPbVvYm35Ti1KKluAdsy4woJA==}
     dependencies:
-      chalk: 4.1.2
       fastify-plugin: 4.5.0
+      kolorist: 1.6.0
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -1673,7 +1673,6 @@ packages:
 
   /kolorist/1.6.0:
     resolution: {integrity: sha512-dLkz37Ab97HWMx9KTes3Tbi3D1ln9fCAy2zr2YVExJasDRPGRaKcoE4fycWNtnCAJfjFqe0cnY+f8KT2JePEXQ==}
-    dev: false
 
   /levn/0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
