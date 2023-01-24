@@ -57,7 +57,7 @@
     "ts-node": "^10.9.1",
     "tsup": "^6.5.0",
     "typescript": "^4.9.4",
-    "vitest": "^0.27.1"
+    "vitest": "^0.28.1"
   },
   "dependencies": {
     "kolorist": "^1.6.0",
