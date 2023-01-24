@@ -1,4 +1,4 @@
-import * as color from "kolorist";
+import color, { options as koloristOptions } from "kolorist";
 import { EOL } from "os";
 import type { LogDescriptor } from "pino";
 import type PinoPretty from "pino-pretty";
@@ -33,7 +33,7 @@ export interface LogObject extends LogDescriptor {
 
 const defaultOptions /*: PinoPretty.PrettyOptions*/ = {
   ignore: "pid,hostname",
-  colorize: Boolean(color.options.supportLevel),
+  colorize: koloristOptions.enabled,
   errorLikeObjectKeys: ["error", "err"],
   singleLine: true,
   hideObject: true,
@@ -43,9 +43,18 @@ const defaultOptions /*: PinoPretty.PrettyOptions*/ = {
 const prettifyTime: PinoPretty.Prettifier = (inputData) => color.gray(String(inputData));
 
 export const build = (options: PinoPretty.PrettyOptions) => {
-  const { errorLikeObjectKeys = defaultOptions.errorLikeObjectKeys, ignore = defaultOptions.ignore } =
-    options;
+  const {
+    errorLikeObjectKeys = defaultOptions.errorLikeObjectKeys,
+    ignore = defaultOptions.ignore,
+    colorize = defaultOptions.colorize,
+  } = options;
   const ignoredKeys = ignore.split(",");
+
+  // Force colorize
+  if (colorize && !koloristOptions.enabled) {
+    koloristOptions.enabled = true;
+    koloristOptions.supportLevel = 2; /* SupportLevel.ansi256 */
+  }
 
   const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey, _leveLabel) => {
     const { level, time, msg, reqId, sessionId, plugin, silent, ...otherProps } = log as LogObject;
@@ -97,5 +106,6 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     },
     messageFormat,
     ...options,
+    colorize: false,
   });
 };
