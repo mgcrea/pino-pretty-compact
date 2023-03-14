@@ -66,6 +66,6 @@
   },
   "dependencies": {
     "kolorist": "^1.6.0",
-    "pino-pretty": "^9.1.1"
+    "pino-pretty": "^10.0.0"
   }
 }
