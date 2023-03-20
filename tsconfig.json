@@ -6,7 +6,8 @@
     "paths": {
       "src/*": ["./src/*"],
       "test/*": ["./test/*"]
-    }
+    },
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src", "test"]
 }
