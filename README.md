@@ -66,6 +66,7 @@ export const buildFastify = (options: FastifyServerOptions = {}): FastifyInstanc
         },
       },
     },
+    disableRequestLogging: true,
     ...options,
   });
 
