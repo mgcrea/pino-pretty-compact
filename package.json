@@ -62,7 +62,7 @@
     "tsup": "^6.7.0",
     "typescript": "^5.0.2",
     "vite-tsconfig-paths": "^4.0.7",
-    "vitest": "^0.29.5"
+    "vitest": "^0.30.0"
   },
   "dependencies": {
     "kolorist": "^1.7.0",
