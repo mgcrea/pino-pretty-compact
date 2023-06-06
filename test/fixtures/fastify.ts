@@ -1,5 +1,5 @@
 import fastifyRequestLogger from "@mgcrea/fastify-request-logger";
-import createFastify, { FastifyInstance, FastifyServerOptions } from "fastify";
+import createFastify, { type FastifyInstance, type FastifyServerOptions } from "fastify";
 import createError from "http-errors";
 import { fsyncSync } from "node:fs";
 

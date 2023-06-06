@@ -74,7 +74,7 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     const firstErrorKey = errorLikeObjectKeys.find((key) => log[key] && isSerializedError(log[key]));
     const formattedMsg = colorMsgForLevel(level)(String(log[messageKey]));
     if (firstErrorKey) {
-      output.push(formattedMsg, EOL, " ", formatError(log[firstErrorKey] as SerializedError), EOL);
+      output.push(formattedMsg, EOL, " ", formatError(log[firstErrorKey] as SerializedError, level), EOL);
     } else {
       output.push(formattedMsg);
     }
