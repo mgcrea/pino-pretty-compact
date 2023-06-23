@@ -16,6 +16,7 @@ import {
   formatRequestId,
   formatSessionId,
   isSerializedError,
+  serializeError,
 } from "./utils";
 
 export interface LogObject extends LogDescriptor {
@@ -71,10 +72,12 @@ export const build = (options: PinoPretty.PrettyOptions) => {
       output.push(formatSessionId(sessionId), " ");
     }
     // Message or error
-    const firstErrorKey = errorLikeObjectKeys.find((key) => log[key] && isSerializedError(log[key]));
+    const firstErrorKey = errorLikeObjectKeys.find((key) => log[key]);
     const formattedMsg = colorMsgForLevel(level)(String(log[messageKey]));
     if (firstErrorKey) {
-      output.push(formattedMsg, EOL, " ", formatError(log[firstErrorKey] as SerializedError, level), EOL);
+      const error = log[firstErrorKey];
+      const serializedError: SerializedError = isSerializedError(error) ? error : serializeError(error);
+      output.push(formattedMsg, EOL, " ", formatError(serializedError, level), EOL);
     } else {
       output.push(formattedMsg);
     }
