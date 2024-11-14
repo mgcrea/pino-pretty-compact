@@ -14,7 +14,7 @@ describe("with fastify path", () => {
     ["token", "abc"],
   ]);
   afterAll(() => {
-    fastify.close();
+    void fastify.close();
     fsyncSync(1);
   });
   it("should properly log a GET request", async () => {

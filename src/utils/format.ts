@@ -5,7 +5,7 @@ import { LOG_LEVEL, LOG_LEVEL_LABEL } from "../config";
 const CWD = process.cwd();
 const CWD_REGEX = new RegExp(CWD, "g");
 
-export const colorForLevel = (level: number) => {
+export const colorForLevel = (level: LOG_LEVEL) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
       return color.gray;
@@ -23,7 +23,7 @@ export const colorForLevel = (level: number) => {
       return color.white;
   }
 };
-export const colorMsgForLevel = (level: number) => {
+export const colorMsgForLevel = (level: LOG_LEVEL) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
       return color.gray;
@@ -55,12 +55,16 @@ export const formatErrorStack = (stack: string): string =>
   color.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
 
 export const formatError = (error: SerializedError, level: LOG_LEVEL): string => {
-  const { statusCode = 500, type = error["name"], stack = `${EOL}    at ???` } = error;
+  const { statusCode = 500, type = String(error["name"]), stack = `${EOL}    at ???` } = error;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
   const supportsArt = color.options.supportLevel === 2; /* SupportLevel.ansi256 */
   const icon = supportsArt ? "×" : "x";
 
   const isInternalError = !statusCode || statusCode >= 500;
-  const output = [color[isInternalError ? "red" : "yellow"](`${icon}${type} `), color.magenta(statusCode)];
+  const output = [
+    color[isInternalError ? "red" : "yellow"](`${icon}${type} `),
+    color.magenta(Number(statusCode)),
+  ];
 
   if (isInternalError) {
     output.push(colorForLevel(level)(`: ${error.message}`), EOL, formatErrorStack(stack));

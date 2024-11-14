@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
 import { pipeline } from "node:stream/promises";
 import { build } from "../prettifier";
@@ -9,4 +9,4 @@ const main = async () => {
   await pipeline(process.stdin, stream);
 };
 
-main();
+void main();

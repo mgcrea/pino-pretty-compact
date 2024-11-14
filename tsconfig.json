@@ -12,7 +12,8 @@
       "test/*": ["./test/*"]
     },
     "ignoreDeprecations": "5.0",
+    "esModuleInterop": true,
     "checkJs": false
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "*.mjs"]
 }

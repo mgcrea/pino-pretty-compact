@@ -3,7 +3,6 @@ import { EOL } from "os";
 import type { LogDescriptor } from "pino";
 import type PinoPretty from "pino-pretty";
 import prettifier from "pino-pretty";
-import type { SerializedError } from "pino-std-serializers";
 import type { LOG_LEVEL } from "./config";
 import {
   colorJson,
@@ -19,6 +18,7 @@ import {
   serializeError,
 } from "./utils";
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export interface LogObject extends LogDescriptor {
   level: LOG_LEVEL;
   time: number;
@@ -41,7 +41,9 @@ const defaultOptions /*: PinoPretty.PrettyOptions*/ = {
   translateTime: "yyyy-mm-dd'T'HH:MM:sso",
 };
 
-const prettifyTime: PinoPretty.Prettifier = (inputData) => color.gray(String(inputData));
+type PrettyOptions = PinoPretty.PrettyOptions;
+
+const prettifyTime = (inputData: string) => color.gray(String(inputData));
 
 export const build = (options: PinoPretty.PrettyOptions) => {
   const {
@@ -57,7 +59,7 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     color.options.supportLevel = 2; /* SupportLevel.ansi256 */
   }
 
-  const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey, _leveLabel) => {
+  const messageFormat: PrettyOptions["messageFormat"] = (log, messageKey, _leveLabel) => {
     const { level, time, msg, reqId, sessionId, plugin, silent, ...otherProps } = log as LogObject;
     if (silent) {
       return "";
@@ -76,7 +78,8 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     const formattedMsg = colorMsgForLevel(level)(String(log[messageKey]));
     if (firstErrorKey) {
       const error = log[firstErrorKey];
-      const serializedError: SerializedError = isSerializedError(error) ? error : serializeError(error);
+      const serializedError = isSerializedError(error) ? error : serializeError(error);
+      console.log({ serializedError });
       output.push(formattedMsg, EOL, " ", formatError(serializedError, level), EOL);
     } else {
       output.push(formattedMsg);
@@ -99,14 +102,16 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     return output.concat(EOL).join("");
   };
 
+  const customPrettifiers = {
+    time: prettifyTime,
+    level: formatLevel,
+    hostname: formatHostname,
+    pid: formatProcessId,
+  } as unknown as NonNullable<PrettyOptions["customPrettifiers"]>;
+
   return prettifier({
     ...defaultOptions,
-    customPrettifiers: {
-      time: prettifyTime,
-      level: formatLevel as unknown as PinoPretty.Prettifier,
-      hostname: formatHostname as unknown as PinoPretty.Prettifier,
-      pid: formatProcessId as unknown as PinoPretty.Prettifier,
-    },
+    customPrettifiers,
     messageFormat,
     ...options,
     colorize: false,

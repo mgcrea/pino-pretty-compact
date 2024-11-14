@@ -26,11 +26,11 @@ export const buildFastify = (options: BuilfFastifyOptions = {}): FastifyInstance
     reply.send({ hello: "world", method: request.method });
   });
 
-  fastify.get("/400", async () => {
+  fastify.get("/400", () => {
     throw createError(400);
   });
 
-  fastify.get("/500", async () => {
+  fastify.get("/500", () => {
     throw createError(500);
   });
 

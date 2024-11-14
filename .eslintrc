@@ -1,4 +1,0 @@
-{
-  "extends": ["@mgcrea/node"],
-  "rules": {}
-}

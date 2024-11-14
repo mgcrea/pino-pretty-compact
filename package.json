@@ -9,9 +9,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.js"
     }
   },
   "main": "./dist/index.cjs",
@@ -26,12 +26,11 @@
   "scripts": {
     "start": "npm run spec -- --watch",
     "build": "tsup --entry src/index.ts --format cjs,esm --no-splitting --sourcemap --dts --clean --entry src/bin/cli.ts",
-    "postbuild": "shebang-trim dist/bin/cli.js dist/bin/cli.cjs",
-    "lint": "eslint src/ test/",
+    "lint": "eslint src/ test/ --ignore-pattern test/fixtures/target.mjs",
     "prettycheck": "prettier --check src/ test/",
     "prettify": "prettier --write src/ test/",
     "typecheck": "tsc --noEmit",
-    "spec": "rm -rf node_modules/.vitest; vitest --run --no-threads --no-isolate",
+    "spec": "vitest --run",
     "test": "npm run lint && npm run prettycheck && npm run typecheck && npm run spec",
     "prepublishOnly": "npm run build"
   },
@@ -43,28 +42,27 @@
     "logger"
   ],
   "devDependencies": {
-    "@mgcrea/eslint-config-node": "^0.5.1",
-    "@mgcrea/fastify-request-logger": "^1.1.1",
-    "@tsconfig/esm": "^1.0.3",
-    "@tsconfig/node-lts": "^18.12.2",
-    "@tsconfig/strictest": "^2.0.1",
-    "@types/http-errors": "^2.0.1",
-    "@types/node": "^18.16.16",
-    "eslint": "^8.42.0",
-    "fastify": "^4.17.0",
+    "@mgcrea/eslint-config-node": "^0.12.16",
+    "@mgcrea/fastify-request-logger": "^1.8.0",
+    "@tsconfig/esm": "^1.0.5",
+    "@tsconfig/node-lts": "^22.0.0",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/http-errors": "^2.0.4",
+    "@types/node": "^22.9.0",
+    "eslint": "^9.14.0",
+    "fastify": "^5.1.0",
     "http-errors": "^2.0.0",
-    "pino": "^8.14.1",
-    "pino-std-serializers": "^6.2.1",
-    "prettier": "^2.8.8",
-    "prettier-plugin-organize-imports": "^3.2.2",
-    "shebang-trim": "^1.2.0",
-    "tsup": "^6.7.0",
-    "typescript": "^5.1.3",
-    "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.31.4"
+    "pino": "^9.5.0",
+    "pino-std-serializers": "^7.0.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vite-tsconfig-paths": "^5.1.2",
+    "vitest": "^2.1.4"
   },
   "dependencies": {
     "kolorist": "^1.8.0",
-    "pino-pretty": "^10.0.0"
+    "pino-pretty": "^13.0.0"
   }
 }
