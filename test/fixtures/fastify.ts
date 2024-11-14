@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fastifyRequestLogger from "@mgcrea/fastify-request-logger";
 import createFastify, { type FastifyInstance, type FastifyServerOptions } from "fastify";
 import createError from "http-errors";
