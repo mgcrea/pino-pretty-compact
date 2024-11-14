@@ -75,12 +75,12 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     }
     // Message or error
     const firstErrorKey = errorLikeObjectKeys.find((key) => log[key]);
-    const formattedMsg = colorMsgForLevel(level)(String(log[messageKey]));
     if (firstErrorKey) {
       const error = log[firstErrorKey];
       const serializedError = isSerializedError(error) ? error : serializeError(error);
-      output.push(formattedMsg, EOL, " ", formatError(serializedError, level), EOL);
+      output.push(formatError(serializedError, level), EOL);
     } else {
+      const formattedMsg = colorMsgForLevel(level)(String(log[messageKey]));
       output.push(formattedMsg);
     }
     // Fastify plugin name
@@ -89,7 +89,7 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     }
     // Other props
     const outputProps = Object.keys(otherProps).reduce<Record<string, unknown>>((soFar, key) => {
-      if (errorLikeObjectKeys.includes(key) || ignoredKeys.includes(key)) {
+      if (errorLikeObjectKeys.includes(key) || ignoredKeys.includes(key) || ["req", "res"].includes(key)) {
         return soFar;
       }
       soFar[key] = otherProps[key];
