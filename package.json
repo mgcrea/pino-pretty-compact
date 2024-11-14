@@ -1,6 +1,6 @@
 {
   "name": "@mgcrea/pino-pretty-compact",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Compact request logger plugin for fastify written in TypeScript",
   "author": "Olivier Louvignes <olivier@mgcrea.io>",
   "repository": "github:mgcrea/pino-pretty-compact",
