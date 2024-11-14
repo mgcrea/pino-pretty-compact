@@ -79,7 +79,6 @@ export const build = (options: PinoPretty.PrettyOptions) => {
     if (firstErrorKey) {
       const error = log[firstErrorKey];
       const serializedError = isSerializedError(error) ? error : serializeError(error);
-      console.log({ serializedError });
       output.push(formattedMsg, EOL, " ", formatError(serializedError, level), EOL);
     } else {
       output.push(formattedMsg);
