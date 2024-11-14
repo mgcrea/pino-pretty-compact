@@ -9,6 +9,11 @@ import baseConfig from "@mgcrea/eslint-config-node";
 export default [
   ...baseConfig,
   {
+    rules: {
+      "no-console": "warn",
+    },
+  },
+  {
     languageOptions: {
       parserOptions: {
         project: ["./tsconfig.json"],
