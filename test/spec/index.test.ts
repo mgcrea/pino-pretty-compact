@@ -5,6 +5,7 @@ describe("module", () => {
     const module = await import("../../src");
     expect(Object.keys(module)).toMatchInlineSnapshot(`
       [
+        "default",
         "colorString",
         "colorKeyword",
         "colorJson",
@@ -12,7 +13,6 @@ describe("module", () => {
         "colorNumber",
         "colorBoolean",
         "colorDate",
-        "default",
       ]
     `);
   });

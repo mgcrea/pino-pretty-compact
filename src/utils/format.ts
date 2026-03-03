@@ -1,4 +1,5 @@
-import pc from "picocolors";
+import * as color from "kolorist";
+import { EOL } from "os";
 import type { SerializedError } from "pino";
 import { LOG_LEVEL, LOG_LEVEL_LABEL } from "../config";
 
@@ -8,62 +9,64 @@ const CWD_REGEX = new RegExp(CWD, "g");
 export const colorForLevel = (level: LOG_LEVEL) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
-      return pc.gray;
+      return color.gray;
     case LOG_LEVEL.DEBUG:
-      return pc.cyan;
+      return color.cyan;
     case LOG_LEVEL.INFO:
-      return pc.green;
+      return color.green;
     case LOG_LEVEL.WARN:
-      return pc.yellow;
+      return color.yellow;
     case LOG_LEVEL.ERROR:
-      return (s: string) => pc.bold(pc.red(s));
+      return (s: string) => color.bold(color.red(s));
     case LOG_LEVEL.FATAL:
-      return (s: string) => pc.bold(pc.bgRed(s));
+      return (s: string) => color.bold(color.bgRed(s));
     default:
-      return pc.white;
+      return color.white;
   }
 };
+
 export const colorMsgForLevel = (level: LOG_LEVEL) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
-      return pc.gray;
+      return color.gray;
     case LOG_LEVEL.DEBUG:
-      return pc.white;
+      return color.white;
     case LOG_LEVEL.INFO:
-      return pc.white;
+      return color.white;
     case LOG_LEVEL.WARN:
-      return pc.yellow;
+      return color.yellow;
     case LOG_LEVEL.ERROR:
-      return (s: string) => pc.bold(pc.red(s));
+      return (s: string) => color.bold(color.red(s));
     case LOG_LEVEL.FATAL:
-      return (s: string) => pc.bold(pc.bgRed(s));
+      return (s: string) => color.bold(color.bgRed(s));
     default:
-      return pc.white;
+      return color.white;
   }
 };
 
-import { EOL } from "os";
 export const formatTime = (time: number): string => new Date(time).toISOString();
-export const colorizeTime = (time: string): string => pc.gray(time);
+export const colorizeTime = (time: string): string => color.gray(time);
 export const formatLevel = (level: LOG_LEVEL): string => colorForLevel(level)(LOG_LEVEL_LABEL[level]);
-export const formatProcessId = (pid: number): string => pc.magenta(`*${pid}`);
-export const formatHostname = (hostname: string | number): string => pc.gray(`@${hostname}`);
-export const formatSessionId = (id: string | number): string => pc.magenta(`%${id}`);
-export const formatRequestId = (id: string | number): string => pc.magenta(`#${id}`);
-export const formatPlugin = (plugin: string): string => pc.gray(`(${plugin})`);
+export const formatProcessId = (pid: number): string => color.magenta(`*${pid}`);
+export const formatHostname = (hostname: string | number): string => color.gray(`@${hostname}`);
+export const formatSessionId = (id: string | number): string => color.magenta(`%${id}`);
+export const formatRequestId = (id: string | number): string => color.magenta(`#${id}`);
+export const formatPlugin = (plugin: string): string => color.gray(`(${plugin})`);
 export const formatErrorStack = (stack: string): string =>
-  pc.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
+  color.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
 
 export const formatError = (error: SerializedError, level: LOG_LEVEL): string => {
-  const { statusCode = 500, type = String(error["name"]), stack = `${EOL}    at ???` } = error;
-  const supportsArt =
-    process.env["COLORTERM"] === "truecolor" ||
-    process.env["COLORTERM"] === "24bit" ||
-    (process.env["TERM"] ?? "").includes("256color");
+  const statusCode = (error.statusCode as number | undefined) ?? 500;
+  const { type, stack } = error;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+  const supportsArt = color.options.supportLevel === 2; /* SupportLevel.ansi256 */
   const icon = supportsArt ? "×" : "x";
 
   const isInternalError = !statusCode || statusCode >= 500;
-  const output = [pc[isInternalError ? "red" : "yellow"](`${icon}${type} `), pc.magenta(String(statusCode))];
+  const output = [
+    color[isInternalError ? "red" : "yellow"](`${icon}${type} `),
+    color.magenta(String(statusCode)),
+  ];
 
   if (isInternalError) {
     output.push(colorForLevel(level)(`: ${error.message}`), EOL, formatErrorStack(stack));
