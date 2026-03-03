@@ -1,4 +1,4 @@
-import * as color from "kolorist";
+import pc from "picocolors";
 import type { SerializedError } from "pino";
 import { LOG_LEVEL, LOG_LEVEL_LABEL } from "../config";
 
@@ -8,62 +8,64 @@ const CWD_REGEX = new RegExp(CWD, "g");
 export const colorForLevel = (level: LOG_LEVEL) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
-      return color.gray;
+      return pc.gray;
     case LOG_LEVEL.DEBUG:
-      return color.cyan;
+      return pc.cyan;
     case LOG_LEVEL.INFO:
-      return color.green;
+      return pc.green;
     case LOG_LEVEL.WARN:
-      return color.yellow;
+      return pc.yellow;
     case LOG_LEVEL.ERROR:
-      return (...args: Parameters<typeof color.bold>) => color.bold(color.red(...args));
+      return (s: string) => pc.bold(pc.red(s));
     case LOG_LEVEL.FATAL:
-      return (...args: Parameters<typeof color.bold>) => color.bold(color.bgRed(...args));
+      return (s: string) => pc.bold(pc.bgRed(s));
     default:
-      return color.white;
+      return pc.white;
   }
 };
 export const colorMsgForLevel = (level: LOG_LEVEL) => {
   switch (level) {
     case LOG_LEVEL.TRACE:
-      return color.gray;
+      return pc.gray;
     case LOG_LEVEL.DEBUG:
-      return color.white;
+      return pc.white;
     case LOG_LEVEL.INFO:
-      return color.white;
+      return pc.white;
     case LOG_LEVEL.WARN:
-      return color.yellow;
+      return pc.yellow;
     case LOG_LEVEL.ERROR:
-      return (...args: Parameters<typeof color.bold>) => color.bold(color.red(...args));
+      return (s: string) => pc.bold(pc.red(s));
     case LOG_LEVEL.FATAL:
-      return (...args: Parameters<typeof color.bold>) => color.bold(color.bgRed(...args));
+      return (s: string) => pc.bold(pc.bgRed(s));
     default:
-      return color.white;
+      return pc.white;
   }
 };
 
 import { EOL } from "os";
 export const formatTime = (time: number): string => new Date(time).toISOString();
-export const colorizeTime = (time: string): string => color.gray(time);
+export const colorizeTime = (time: string): string => pc.gray(time);
 export const formatLevel = (level: LOG_LEVEL): string => colorForLevel(level)(LOG_LEVEL_LABEL[level]);
-export const formatProcessId = (pid: number): string => color.magenta(`*${pid}`);
-export const formatHostname = (hostname: string | number): string => color.gray(`@${hostname}`);
-export const formatSessionId = (id: string | number): string => color.magenta(`%${id}`);
-export const formatRequestId = (id: string | number): string => color.magenta(`#${id}`);
-export const formatPlugin = (plugin: string): string => color.gray(`(${plugin})`);
+export const formatProcessId = (pid: number): string => pc.magenta(`*${pid}`);
+export const formatHostname = (hostname: string | number): string => pc.gray(`@${hostname}`);
+export const formatSessionId = (id: string | number): string => pc.magenta(`%${id}`);
+export const formatRequestId = (id: string | number): string => pc.magenta(`#${id}`);
+export const formatPlugin = (plugin: string): string => pc.gray(`(${plugin})`);
 export const formatErrorStack = (stack: string): string =>
-  color.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
+  pc.gray(stack.replace(CWD_REGEX, ".").split(EOL).slice(1).join(EOL));
 
 export const formatError = (error: SerializedError, level: LOG_LEVEL): string => {
   const { statusCode = 500, type = String(error["name"]), stack = `${EOL}    at ???` } = error;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-  const supportsArt = color.options.supportLevel === 2; /* SupportLevel.ansi256 */
+  const supportsArt =
+    process.env["COLORTERM"] === "truecolor" ||
+    process.env["COLORTERM"] === "24bit" ||
+    (process.env["TERM"] ?? "").includes("256color");
   const icon = supportsArt ? "×" : "x";
 
   const isInternalError = !statusCode || statusCode >= 500;
   const output = [
-    color[isInternalError ? "red" : "yellow"](`${icon}${type} `),
-    color.magenta(Number(statusCode)),
+    pc[isInternalError ? "red" : "yellow"](`${icon}${type} `),
+    pc.magenta(String(statusCode)),
   ];
 
   if (isInternalError) {

@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      kolorist:
-        specifier: ^1.8.0
-        version: 1.8.0
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
       pino-pretty:
         specifier: ^13.0.0
         version: 13.0.0

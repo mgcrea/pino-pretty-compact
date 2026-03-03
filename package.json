@@ -62,7 +62,7 @@
     "vitest": "^2.1.4"
   },
   "dependencies": {
-    "kolorist": "^1.8.0",
+    "picocolors": "^1.1.1",
     "pino-pretty": "^13.0.0"
   }
 }
