@@ -63,10 +63,7 @@ export const formatError = (error: SerializedError, level: LOG_LEVEL): string =>
   const icon = supportsArt ? "×" : "x";
 
   const isInternalError = !statusCode || statusCode >= 500;
-  const output = [
-    pc[isInternalError ? "red" : "yellow"](`${icon}${type} `),
-    pc.magenta(String(statusCode)),
-  ];
+  const output = [pc[isInternalError ? "red" : "yellow"](`${icon}${type} `), pc.magenta(String(statusCode))];
 
   if (isInternalError) {
     output.push(colorForLevel(level)(`: ${error.message}`), EOL, formatErrorStack(stack));

@@ -46,10 +46,8 @@ type PrettyOptions = PinoPretty.PrettyOptions;
 const prettifyTime = (inputData: string) => pc.gray(String(inputData));
 
 export const build = (options: PinoPretty.PrettyOptions) => {
-  const {
-    errorLikeObjectKeys = defaultOptions.errorLikeObjectKeys,
-    ignore = defaultOptions.ignore,
-  } = options;
+  const { errorLikeObjectKeys = defaultOptions.errorLikeObjectKeys, ignore = defaultOptions.ignore } =
+    options;
   const ignoredKeys = ignore.split(",");
 
   const messageFormat: PrettyOptions["messageFormat"] = (log, messageKey, _leveLabel) => {
